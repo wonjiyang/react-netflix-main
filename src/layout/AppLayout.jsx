@@ -78,7 +78,7 @@ function AppLayout() {
 
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
-            <Nav className="me-auto my-2 my-lg-0 netflix-nav" navbarScroll>
+            <Nav className="me-auto my-2 my-lg-0 movie-nav" navbarScroll>
               <Nav.Link as={Link} to="/">
                 홈
               </Nav.Link>
@@ -98,7 +98,7 @@ function AppLayout() {
                 {showSearch && (
                   <input
                     type="text"
-                    className="netflix-search-input"
+                    className="movie-search-input"
                     placeholder="콘텐츠, 장르, 배우 검색..."
                     autoFocus
                     value={keyword}
@@ -109,7 +109,7 @@ function AppLayout() {
                   />
                 )}
                 <Search
-                  className="netflix-search-icon"
+                  className="movie-search-icon"
                   size={20}
                   onClick={toggleSearch}
                 />
@@ -117,7 +117,7 @@ function AppLayout() {
 
               <div className="notification-container" ref={notificationRef}>
                 <Bell
-                  className="netflix-bell-icon"
+                  className="movie-bell-icon"
                   size={22}
                   onClick={toggleNotifications}
                 />

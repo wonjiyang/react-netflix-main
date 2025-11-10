@@ -44,15 +44,16 @@
   visibility: hidden;
 }
 
-.netflix-pagination {
+.movie-pagination {
   display: flex;
   justify-content: center;
   margin: 2rem 0;
   list-style: none;
   gap: 0.5rem;
+  padding-left: 0;
 }
 
-.netflix-pagination .page-item .page-link {
+.movie-pagination .page-item .page-link {
   padding: 0.5rem 0.8rem;
   background-color: #333;
   color: #fff;
@@ -62,16 +63,49 @@
   font-weight: 600;
 }
 
-.netflix-pagination .page-item.active .page-link {
+.movie-pagination .page-item.active .page-link {
   background-color: #e50914;
   color: #fff;
 }
 
-.netflix-pagination .page-item .page-link:hover {
+.movie-pagination .page-item .page-link:hover {
   background-color: #555;
 }
 
-.netflix-pagination .page-item.disabled .page-link {
+.movie-pagination .page-item.disabled .page-link {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .movie-pagination {
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin: 1.5rem 0;
+  }
+
+  .movie-pagination .page-item .page-link {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  .movie-pagination .page-item.active .page-link {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .movie-pagination {
+    gap: 0.2rem;
+    margin: 1rem 0;
+  }
+
+  .movie-pagination .page-item .page-link {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .movie-pagination .page-item.active .page-link {
+    font-size: 0.8rem;
+  }
 }

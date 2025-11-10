@@ -29,7 +29,7 @@ function PopularMovieSlide() {
 
   if (isLoading)
     return (
-      <div className="netflix-loading">
+      <div className="movie-loading">
         <Spinner animation="border" variant="light" />
       </div>
     );
@@ -42,8 +42,8 @@ function PopularMovieSlide() {
       <Carousel
         responsive={responsive}
         infinite
-        itemClass="netflix-slide p-1"
-        containerClass="netflix-carousel"
+        itemClass="movie-slide p-1"
+        containerClass="movie-carousel"
         arrows={true}
         draggable
       >

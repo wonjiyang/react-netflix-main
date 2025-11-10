@@ -69,7 +69,7 @@ function MoviePage() {
               pageCount={data.total_pages}
               forcePage={page - 1}
               onPageChange={handlePageClick}
-              containerClassName="netflix-pagination"
+              containerClassName="movie-pagination"
               pageClassName="page-item"
               pageLinkClassName="page-link"
               previousClassName="page-item"
