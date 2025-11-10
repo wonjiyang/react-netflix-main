@@ -9,6 +9,7 @@ function AppLayout() {
   const [showSearch, setShowSearch] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [keyword, setKeyword] = useState('');
+  const [collapseOpen, setCollapseOpen] = useState(false);
   const navigate = useNavigate();
   const searchRef = useRef(null);
   const notificationRef = useRef(null);
@@ -19,28 +20,19 @@ function AppLayout() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // 검색 실행
   const handleSearch = (event) => {
     if (event) event.preventDefault();
-
     const trimmed = keyword.trim();
-
-    if (!trimmed) {
-      navigate('/movies');
-    } else {
-      navigate(`/movies?q=${encodeURIComponent(trimmed)}`);
-    }
-
+    navigate(trimmed ? `/movies?q=${encodeURIComponent(trimmed)}` : '/movies');
     setKeyword('');
-    setShowSearch(false);
+    setShowSearch(false); // 검색 실행 후에만 input 닫기
+    setCollapseOpen(false); // 모바일 메뉴도 닫기
   };
 
   const toggleSearch = () => {
-    if (!showSearch) {
-      setShowSearch(true);
-      setShowNotifications(false);
-    } else {
-      handleSearch();
-    }
+    setShowSearch(true); // 아이콘 클릭 시 항상 input 보여줌
+    setShowNotifications(false);
   };
 
   const toggleNotifications = () => {
@@ -70,6 +62,8 @@ function AppLayout() {
         expand="md"
         className={`navbar fixed-top ${showBackground ? 'scrolled' : ''}`}
         variant="dark"
+        expanded={collapseOpen}
+        onToggle={(open) => setCollapseOpen(open)}
       >
         <Container fluid>
           <Navbar.Brand as={Link} to="/" className="logo">
@@ -79,16 +73,28 @@ function AppLayout() {
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav className="me-auto my-2 my-lg-0 movie-nav" navbarScroll>
-              <Nav.Link as={Link} to="/">
+              <Nav.Link as={Link} to="/" onClick={() => setCollapseOpen(false)}>
                 홈
               </Nav.Link>
-              <Nav.Link as={Link} to="/movies">
+              <Nav.Link
+                as={Link}
+                to="/movies"
+                onClick={() => setCollapseOpen(false)}
+              >
                 영화
               </Nav.Link>
-              <Nav.Link as={Link} to="/series">
+              <Nav.Link
+                as={Link}
+                to="/series"
+                onClick={() => setCollapseOpen(false)}
+              >
                 시리즈
               </Nav.Link>
-              <Nav.Link as={Link} to="/mylist">
+              <Nav.Link
+                as={Link}
+                to="/mylist"
+                onClick={() => setCollapseOpen(false)}
+              >
                 내가 찜한 콘텐츠
               </Nav.Link>
             </Nav>
@@ -111,7 +117,7 @@ function AppLayout() {
                 <Search
                   className="movie-search-icon"
                   size={20}
-                  onClick={toggleSearch}
+                  onClick={toggleSearch} // 클릭 시 input은 계속 보여짐
                 />
               </div>
 
