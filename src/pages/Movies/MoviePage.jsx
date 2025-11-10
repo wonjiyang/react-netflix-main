@@ -3,7 +3,7 @@ import { useSearchMovieQuery } from '../../hooks/useSearchMovie';
 import { useSearchParams } from 'react-router-dom';
 import MovieCard from '../Homepage/components/MovieCard/MovieCard';
 import ReactPaginate from 'react-paginate';
-import './MoviePage.style.css';
+import './Moviepage.style.css';
 
 function MoviePage() {
   const [query] = useSearchParams();
