@@ -1,0 +1,77 @@
+.movie-page-container {
+  padding: 4rem 2rem 2rem 2rem;
+  background-color: #141414;
+  min-height: 100vh;
+  color: #fff;
+}
+
+.page-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 1.5rem 0.8rem;
+  text-align: left;
+}
+
+.spinner-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  font-size: 1.2rem;
+}
+
+.no-result {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30vh;
+  flex-direction: column;
+  font-size: 1.2rem;
+  color: #999;
+}
+
+.no-result h3 {
+  font-size: 1rem;
+}
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.2rem;
+}
+
+.movie-card.empty-card {
+  visibility: hidden;
+}
+
+.netflix-pagination {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+  list-style: none;
+  gap: 0.5rem;
+}
+
+.netflix-pagination .page-item .page-link {
+  padding: 0.5rem 0.8rem;
+  background-color: #333;
+  color: #fff;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 600;
+}
+
+.netflix-pagination .page-item.active .page-link {
+  background-color: #e50914;
+  color: #fff;
+}
+
+.netflix-pagination .page-item .page-link:hover {
+  background-color: #555;
+}
+
+.netflix-pagination .page-item.disabled .page-link {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

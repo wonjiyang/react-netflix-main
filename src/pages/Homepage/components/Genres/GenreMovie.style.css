@@ -1,0 +1,43 @@
+.movie-card-sec {
+  margin: 1.5rem 0;
+}
+
+.movie-title {
+  text-align: left;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-left: 0.3rem;
+  margin-bottom: 0.7rem;
+}
+
+.netflix-carousel {
+  padding: 0 0.5rem;
+}
+
+.netflix-slide {
+  display: flex;
+  justify-content: center;
+}
+
+.netflix-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+}
+
+@media (max-width: 768px) {
+  .movie-card-sec {
+    padding: 0 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .movie-card-sec {
+    padding: 0 1.5rem;
+  }
+  .movie-title {
+    font-size: 0.8rem;
+  }
+}

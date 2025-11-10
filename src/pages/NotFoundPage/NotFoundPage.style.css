@@ -1,0 +1,38 @@
+.notfound-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+}
+
+.notfound-title {
+  font-size: 8rem;
+  font-weight: 900;
+  color: #e50914;
+  margin: 0;
+}
+
+.notfound-text {
+  font-size: 1.25rem;
+  margin: 20px 0 30px;
+  color: #aaa;
+}
+
+.notfound-button {
+  display: inline-block;
+  background-color: #e50914;
+  color: white;
+  text-decoration: none;
+  padding: 10px 25px;
+  border-radius: 5px;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.notfound-button:hover {
+  background-color: #f40612;
+}

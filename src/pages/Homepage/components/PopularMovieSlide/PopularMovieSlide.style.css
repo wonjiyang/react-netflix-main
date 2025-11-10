@@ -1,0 +1,54 @@
+.movie-card-sec {
+  margin-top: 50px;
+  padding: 0 3rem;
+  background-color: #000000;
+  color: #fff;
+  position: relative;
+  z-index: 5;
+  overflow: visible !important;
+}
+
+.netflix-carousel {
+  position: relative;
+  overflow: visible !important;
+}
+
+.netflix-slide {
+  overflow: visible !important;
+  transition: transform 0.3s ease, z-index 0.3s ease;
+  z-index: 1;
+}
+
+.react-multi-carousel-track {
+  overflow: visible !important;
+}
+
+.react-multiple-carousel__arrow {
+  background: rgba(0, 0, 0, 0.6) !important;
+  border-radius: 50%;
+  z-index: 30;
+  transition: background 0.3s;
+}
+
+.react-multiple-carousel__arrow:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+}
+
+.netflix-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.movie-card-sec {
+  overflow-x: hidden;
+}
+
+.react-multi-carousel-list {
+  overflow: visible !important;
+}
+
+body {
+  overflow-x: hidden;
+}
