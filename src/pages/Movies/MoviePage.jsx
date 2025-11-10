@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchMovieQuery } from '../../hooks/useSearchMovie';
 import { useSearchParams } from 'react-router-dom';
 import MovieCard from '../Homepage/components/MovieCard/MovieCard';
-import ReactPaginate from 'react-paginate'; // ✅ 추가!
+import ReactPaginate from 'react-paginate';
 import './MoviePage.style.css';
 
 function MoviePage() {
@@ -10,7 +10,6 @@ function MoviePage() {
   const keyword = query.get('q') || '';
   const [page, setPage] = useState(1);
 
-  // 검색어가 바뀔 때마다 페이지 초기화
   useEffect(() => {
     setPage(1);
   }, [keyword]);
@@ -24,7 +23,6 @@ function MoviePage() {
     setPage(selected + 1);
   };
 
-  // 이미지 & 제목 없는 항목 제외
   const movies =
     data?.results?.filter((movie) => movie.poster_path && movie.title) || [];
 
@@ -58,14 +56,12 @@ function MoviePage() {
               <MovieCard key={movie.id} movie={movie} />
             ))}
 
-            {/* 카드가 적을 때 빈칸 유지 */}
             {movies.length < 6 &&
               Array.from({ length: 6 - movies.length }).map((_, idx) => (
                 <div key={`empty-${idx}`} className="movie-card empty-card" />
               ))}
           </div>
 
-          {/* 페이지네이션 */}
           {data?.total_pages > 1 && (
             <ReactPaginate
               nextLabel="▶"
