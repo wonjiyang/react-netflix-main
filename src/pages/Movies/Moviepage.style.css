@@ -6,44 +6,75 @@
 }
 
 .page-title {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  margin: 1.5rem 0.8rem;
+  margin: 1.5rem 0;
   text-align: left;
 }
 
-.spinner-area {
+/* 스피너/노 결과 */
+.spinner-area,
+.no-result {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 50vh;
   font-size: 1.2rem;
-}
-
-.no-result {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 30vh;
   flex-direction: column;
-  font-size: 1.2rem;
   color: #999;
 }
-
 .no-result h3 {
   font-size: 1rem;
 }
 
+/* 영화 카드 그리드 */
 .movie-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1.2rem;
+  gap: 1.5rem;
+}
+.movie-card {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.movie-card:hover {
+  transform: scale(1.05);
 }
 
-.movie-card.empty-card {
-  visibility: hidden;
+/* 필터 바 */
+.filter-bar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.genre-filter,
+.sort-filter {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.filter-btn {
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.7rem;
+}
+.filter-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+.filter-btn.active {
+  background: #e50914;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(229, 9, 20, 0.7);
 }
 
+/* 페이지네이션 */
 .movie-pagination {
   display: flex;
   justify-content: center;
@@ -52,43 +83,39 @@
   gap: 0.5rem;
   padding-left: 0;
 }
-
 .movie-pagination .page-item .page-link {
   padding: 0.5rem 0.8rem;
   background-color: #333;
   color: #fff;
-  border-radius: 3px;
+  border-radius: 4px;
   cursor: pointer;
   transition: all 0.3s;
   font-weight: 600;
 }
-
 .movie-pagination .page-item.active .page-link {
   background-color: #e50914;
   color: #fff;
+  box-shadow: 0 0 10px rgba(229, 9, 20, 0.6);
 }
-
 .movie-pagination .page-item .page-link:hover {
   background-color: #555;
 }
-
 .movie-pagination .page-item.disabled .page-link {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
+/* 모바일 대응 */
 @media (max-width: 768px) {
   .movie-pagination {
     flex-wrap: wrap;
     gap: 0.3rem;
     margin: 1.5rem 0;
   }
-
   .movie-pagination .page-item .page-link {
     padding: 0.4rem 0.6rem;
     font-size: 0.8rem;
   }
-
   .movie-pagination .page-item.active .page-link {
     font-size: 0.85rem;
   }
@@ -99,12 +126,10 @@
     gap: 0.2rem;
     margin: 1rem 0;
   }
-
   .movie-pagination .page-item .page-link {
     padding: 0.35rem 0.5rem;
     font-size: 0.75rem;
   }
-
   .movie-pagination .page-item.active .page-link {
     font-size: 0.8rem;
   }

@@ -39,6 +39,11 @@
   padding: 1rem;
   opacity: 0;
   transition: opacity 0.3s ease;
+  pointer-events: none; /* overlay가 클릭을 막지 않도록 유지 */
+}
+
+.movie-card-overlay > * {
+  pointer-events: auto; /* 텍스트나 버튼 클릭은 가능 */
 }
 
 .movie-card:hover .movie-card-overlay {

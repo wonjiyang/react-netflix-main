@@ -1,4 +1,3 @@
-import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Alert, Spinner } from 'react-bootstrap';
 import Carousel from 'react-multi-carousel';
@@ -21,33 +20,7 @@ const fetchMoviesByGenre = async (genreId) => {
   return res.data;
 };
 
-class ErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false };
-  }
-
-  static getDerivedStateFromError() {
-    return { hasError: true };
-  }
-
-  componentDidCatch(error, errorInfo) {
-    console.error('ErrorBoundary caught an error:', error, errorInfo);
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return (
-        <Alert variant="danger">
-          문제가 발생했습니다. 나중에 다시 시도해주세요.
-        </Alert>
-      );
-    }
-    return this.props.children;
-  }
-}
-
-function GenreCarousel({ genreId, title }) {
+function GenreCarousel({ genreId, title, onMovieClick }) {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: [`genre-${genreId}-movies`],
     queryFn: () => fetchMoviesByGenre(genreId),
@@ -61,7 +34,6 @@ function GenreCarousel({ genreId, title }) {
     );
 
   if (isError) return <Alert variant="danger">{error.message}</Alert>;
-
   if (!data?.results || data.results.length === 0)
     return <Alert variant="warning">{title} 영화가 없습니다.</Alert>;
 
@@ -76,20 +48,32 @@ function GenreCarousel({ genreId, title }) {
         arrows
         draggable
       >
-        {data.results.map((movie, idx) => (
-          <MovieCard key={idx} movie={movie} />
+        {data.results.map((movie) => (
+          <MovieCard key={movie.id} movie={movie} onClick={onMovieClick} />
         ))}
       </Carousel>
     </div>
   );
 }
 
-export default function GenreMovieSlide() {
+export default function GenreMovieSlide({ onMovieClick }) {
   return (
-    <ErrorBoundary>
-      <GenreCarousel genreId={35} title="코미디 시리즈" />
-      <GenreCarousel genreId={28} title="액션 시리즈" />
-      <GenreCarousel genreId={18} title="드라마 시리즈" />
-    </ErrorBoundary>
+    <>
+      <GenreCarousel
+        genreId={35}
+        title="코미디 시리즈"
+        onMovieClick={onMovieClick}
+      />
+      <GenreCarousel
+        genreId={28}
+        title="액션 시리즈"
+        onMovieClick={onMovieClick}
+      />
+      <GenreCarousel
+        genreId={18}
+        title="드라마 시리즈"
+        onMovieClick={onMovieClick}
+      />
+    </>
   );
 }

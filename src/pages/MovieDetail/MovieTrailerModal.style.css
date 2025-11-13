@@ -1,0 +1,163 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* 항상 최상위 */
+  overflow-y: auto;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.modal-container {
+  background-color: #141414;
+  color: #fff;
+  border-radius: 10px;
+  max-width: 900px;
+  width: 90%;
+  padding: 20px;
+  animation: scaleIn 0.3s ease forwards;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.modal-header {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.modal-poster {
+  width: 200px;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+
+.modal-info {
+  flex: 1;
+}
+
+.modal-info h2 {
+  margin-top: 0;
+}
+
+.overview {
+  margin-top: 10px;
+  line-height: 1.4;
+  color: #ccc;
+}
+
+.modal-section {
+  margin-top: 25px;
+}
+
+.review-card {
+  border-top: 1px solid #333;
+  padding: 10px 0;
+  color: #ccc;
+}
+
+.recommendation-grid {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.recommendation-card {
+  width: 120px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  text-align: center;
+}
+
+.recommendation-card img {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.recommendation-card:hover {
+  transform: scale(1.05);
+}
+
+.trailer-btn {
+  margin-top: 15px;
+  padding: 8px 15px;
+  background-color: #e50914;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.trailer-btn:hover {
+  background-color: #f40612;
+}
+
+.trailer-btn:active {
+  background-color: #d40612;
+}
+
+.modal-loading {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 1.5rem;
+  background-color: rgba(0, 0, 0, 0.85);
+  z-index: 9999;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 600px) {
+  .modal-header {
+    flex-direction: column;
+    align-items: center;
+  }
+  .modal-poster {
+    width: 150px;
+  }
+}
+
+/* MovieTrailerModal */
+.trailer-modal .modal-dialog {
+  z-index: 1050 !important; /* bootstrap modal보다 높게 */
+}
+
+.youtube-iframe-wrapper {
+  position: relative;
+  z-index: 1060; /* iframe이 항상 위에 표시 */
+}

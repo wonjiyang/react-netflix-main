@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { Container, Navbar, Nav, Form } from 'react-bootstrap';
 import { Search, Bell } from 'react-bootstrap-icons';
+import MovieDetailModal from '../pages/MovieDetail/MovieDetailModal';
 import './AppLayout.style.css';
 
 function AppLayout() {
@@ -10,6 +11,9 @@ function AppLayout() {
   const [showNotifications, setShowNotifications] = useState(false);
   const [keyword, setKeyword] = useState('');
   const [collapseOpen, setCollapseOpen] = useState(false);
+
+  const [selectedMovie, setSelectedMovie] = useState(null);
+
   const navigate = useNavigate();
   const searchRef = useRef(null);
   const notificationRef = useRef(null);
@@ -20,18 +24,17 @@ function AppLayout() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // 검색 실행
   const handleSearch = (event) => {
     if (event) event.preventDefault();
     const trimmed = keyword.trim();
     navigate(trimmed ? `/movies?q=${encodeURIComponent(trimmed)}` : '/movies');
     setKeyword('');
-    setShowSearch(false); // 검색 실행 후에만 input 닫기
-    setCollapseOpen(false); // 모바일 메뉴도 닫기
+    setShowSearch(false);
+    setCollapseOpen(false);
   };
 
   const toggleSearch = () => {
-    setShowSearch(true); // 아이콘 클릭 시 항상 input 보여줌
+    setShowSearch(true);
     setShowNotifications(false);
   };
 
@@ -55,6 +58,9 @@ function AppLayout() {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  const handleOpenModal = (movie) => setSelectedMovie(movie);
+  const handleCloseModal = () => setSelectedMovie(null);
 
   return (
     <div>
@@ -117,7 +123,7 @@ function AppLayout() {
                 <Search
                   className="movie-search-icon"
                   size={20}
-                  onClick={toggleSearch} // 클릭 시 input은 계속 보여짐
+                  onClick={toggleSearch}
                 />
               </div>
 
@@ -140,9 +146,11 @@ function AppLayout() {
         </Container>
       </Navbar>
 
-      <div className="content-wrapper">
-        <Outlet />
-      </div>
+      <Outlet context={{ onMovieClick: handleOpenModal }} />
+
+      {selectedMovie && (
+        <MovieDetailModal movie={selectedMovie} onClose={handleCloseModal} />
+      )}
     </div>
   );
 }

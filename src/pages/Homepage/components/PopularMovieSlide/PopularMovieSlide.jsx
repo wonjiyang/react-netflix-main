@@ -1,30 +1,18 @@
-import { usePopularMoviesQuery } from '../../../../hooks/usePopularMovies';
 import { Alert, Spinner } from 'react-bootstrap';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import './PopularMovieSlide.style.css';
 import MovieCard from '../MovieCard/MovieCard';
+import './PopularMovieSlide.style.css';
+import { usePopularMoviesQuery } from '../../../../hooks/usePopularMovies';
 
 const responsive = {
-  desktop: {
-    breakpoint: { max: 3000, min: 1280 },
-    items: 6,
-  },
-  laptop: {
-    breakpoint: { max: 1280, min: 1024 },
-    items: 5,
-  },
-  tablet: {
-    breakpoint: { max: 1024, min: 600 },
-    items: 3,
-  },
-  mobile: {
-    breakpoint: { max: 600, min: 0 },
-    items: 2,
-  },
+  desktop: { breakpoint: { max: 3000, min: 1280 }, items: 6 },
+  laptop: { breakpoint: { max: 1280, min: 1024 }, items: 5 },
+  tablet: { breakpoint: { max: 1024, min: 600 }, items: 3 },
+  mobile: { breakpoint: { max: 600, min: 0 }, items: 2 },
 };
 
-function PopularMovieSlide() {
+export default function PopularMovieSlide({ onMovieClick }) {
   const { data, isLoading, isError, error } = usePopularMoviesQuery();
 
   if (isLoading)
@@ -44,15 +32,13 @@ function PopularMovieSlide() {
         infinite
         itemClass="movie-slide p-1"
         containerClass="movie-carousel"
-        arrows={true}
+        arrows
         draggable
       >
-        {data.results.map((movie, index) => (
-          <MovieCard movie={movie} key={index} />
+        {data.results.map((movie) => (
+          <MovieCard key={movie.id} movie={movie} onClick={onMovieClick} />
         ))}
       </Carousel>
     </div>
   );
 }
-
-export default PopularMovieSlide;
