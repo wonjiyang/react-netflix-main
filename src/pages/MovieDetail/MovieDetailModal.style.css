@@ -70,7 +70,6 @@
   width: 220px;
   border-radius: 8px;
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
-  margin-bottom: 15px;
 }
 .movie-info-alt {
   flex: 1;
@@ -122,10 +121,7 @@
   border-radius: 6px;
   transition: all 0.2s;
 }
-.info-card-alt:hover {
-  background: rgba(255, 255, 255, 0.1);
-  transform: translateY(-2px);
-}
+
 .info-card-icon {
   font-size: 1.2rem;
 }
@@ -192,7 +188,7 @@
 
 .modal-section {
   color: white;
-  margin-top: 30px;
+  margin-top: 50px;
 }
 .modal-section h3 {
   font-size: 1.4rem;
@@ -207,10 +203,11 @@
   margin-bottom: 3rem;
 }
 .review-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
+
 .review-card {
   background: #1f1f1f;
   border-radius: 8px;
@@ -220,10 +217,7 @@
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
   transition: transform 0.2s, box-shadow 0.2s;
 }
-.review-card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 30px rgba(229, 9, 20, 0.7);
-}
+
 .review-author {
   font-weight: 600;
   margin-bottom: 5px;
@@ -243,7 +237,6 @@
 }
 
 .review-card p {
-  max-height: 120px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -280,10 +273,6 @@
   border-radius: 6px;
   margin-bottom: 5px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-}
-.recommendation-card:hover {
-  transform: scale(1.05);
-  filter: brightness(1.1);
 }
 
 .trailer-overlay {
@@ -349,4 +338,90 @@
   .info-section-alt {
     grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
   }
+}
+
+.review-title {
+  margin-top: 20px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 12px;
+}
+
+.review-card {
+  background: #1e1e1e;
+  padding: 16px;
+  border-radius: 10px;
+  line-height: 1.5;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.review-author {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px !important;
+}
+
+.review-content {
+  margin: 8px 10px 0 10px !important;
+  white-space: pre-line;
+}
+
+.review-toggle-btn {
+  margin-top: 8px;
+  padding: 4px 10px;
+  background: transparent;
+  border: none;
+  color: #a0a0a0;
+  cursor: pointer;
+}
+
+.review-toggle-btn:hover {
+  color: #fff;
+}
+
+/* ⭐️ 별점 */
+.star {
+  font-size: 18px;
+  color: #555;
+}
+
+.star.filled {
+  color: gold;
+}
+
+.review-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  align-items: center;
+  margin-top: 18px;
+}
+
+.review-pagination button {
+  padding: 6px 12px;
+  background: #333;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.review-pagination button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.page-info {
+  color: #fff;
 }

@@ -6,14 +6,22 @@ export default function MovieDetailModal({ movie, onClose, onMovieClick }) {
   const [movieDetail, setMovieDetail] = useState(null);
   const [trailerKey, setTrailerKey] = useState(null);
   const [showTrailer, setShowTrailer] = useState(false);
+
   const [reviews, setReviews] = useState([]);
+  const [reviewPage, setReviewPage] = useState(1);
+  const [totalReviewPages, setTotalReviewPages] = useState(1);
+
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  /* ---------------------------------------------------------
+     영화 상세, 비디오, 추천영화
+  --------------------------------------------------------- */
   useEffect(() => {
     const fetchMovieData = async () => {
       try {
         setLoading(true);
+
         const { data: detailData } = await api.get(`/movie/${movie.id}`, {
           params: { language: 'ko-KR' },
         });
@@ -27,14 +35,6 @@ export default function MovieDetailModal({ movie, onClose, onMovieClick }) {
         );
         setTrailerKey(trailer ? trailer.key : null);
 
-        const { data: reviewData } = await api.get(
-          `/movie/${movie.id}/reviews`,
-          { params: { language: 'ko-KR' } }
-        );
-        setReviews(
-          reviewData.results.map((r) => ({ ...r, expanded: false })) || []
-        );
-
         const { data: recData } = await api.get(
           `/movie/${movie.id}/recommendations`,
           { params: { language: 'ko-KR' } }
@@ -46,8 +46,38 @@ export default function MovieDetailModal({ movie, onClose, onMovieClick }) {
         setLoading(false);
       }
     };
+
     fetchMovieData();
   }, [movie]);
+
+  /* ---------------------------------------------------------
+     리뷰 가져오기 (영어 + 페이지네이션)
+  --------------------------------------------------------- */
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const { data } = await api.get(`/movie/${movie.id}/reviews`, {
+          params: {
+            page: reviewPage, // 페이지네이션 적용
+            language: 'en-US', // 영어 리뷰
+          },
+        });
+
+        setTotalReviewPages(data.total_pages || 1);
+
+        setReviews(
+          data.results.map((r) => ({
+            ...r,
+            expanded: false,
+          })) || []
+        );
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchReviews();
+  }, [movie, reviewPage]);
 
   if (loading || !movieDetail)
     return <div className="modal-loading">Loading...</div>;
@@ -66,6 +96,22 @@ export default function MovieDetailModal({ movie, onClose, onMovieClick }) {
     );
   };
 
+  /* 별점(author_details.rating) → 10점 → 5점으로 변환 */
+  const renderStars = (rating) => {
+    if (!rating) return <span className="rating-none">No rating</span>;
+
+    const score = Math.round(rating / 2); // 5점 기준으로 환산
+    return (
+      <span className="review-stars">
+        {[1, 2, 3, 4, 5].map((n) => (
+          <span key={n} className={n <= score ? 'star filled' : 'star'}>
+            ★
+          </span>
+        ))}
+      </span>
+    );
+  };
+
   return (
     <>
       <div className="modal-overlay" onClick={onClose}>
@@ -74,15 +120,13 @@ export default function MovieDetailModal({ movie, onClose, onMovieClick }) {
             ✕
           </button>
 
-          {/* 상세 정보 영역 */}
+          {/* ---------------- 상세 정보 ---------------- */}
           <div className="modal-header-alt">
             <img src={imgUrl} alt={movieDetail.title} className="poster-alt" />
 
             <div className="movie-info-alt">
-              {/* 제목 */}
               <h2 className="movie-title-alt">{movieDetail.title}</h2>
 
-              {/* 장르 / 평점 */}
               <div className="poster-info-line">
                 <span className="genre-badge">{genres}</span>
                 <span className="rating-badge">
@@ -90,7 +134,6 @@ export default function MovieDetailModal({ movie, onClose, onMovieClick }) {
                 </span>
               </div>
 
-              {/* 기타 정보 카드 */}
               <div className="info-section-alt">
                 <div className="info-card-alt">
                   <div className="info-card-icon">🔥</div>
@@ -121,12 +164,10 @@ export default function MovieDetailModal({ movie, onClose, onMovieClick }) {
                 </div>
               </div>
 
-              {/* 줄거리 */}
               <div className="overview-alt">
                 <p>{movieDetail.overview}</p>
               </div>
 
-              {/* 예고편 버튼 */}
               {trailerKey && (
                 <button
                   className="trailer-btn"
@@ -138,22 +179,30 @@ export default function MovieDetailModal({ movie, onClose, onMovieClick }) {
             </div>
           </div>
 
-          {/* 리뷰 */}
+          {/* ---------------- 리뷰 ---------------- */}
           <div className="modal-section">
             <h3>리뷰</h3>
+
             {reviews.length === 0 ? (
-              <p>등록된 리뷰가 없습니다.</p>
+              <p>리뷰가 없습니다.</p>
             ) : (
               <div className="review-grid">
                 {reviews.map((review) => (
                   <div className="review-card" key={review.id}>
                     <p className="review-author">{review.author}</p>
+
+                    {/* ⭐ 리뷰 별점 */}
+                    <div className="review-rating">
+                      {renderStars(review.author_details?.rating)}
+                    </div>
+
                     <p className="review-content">
                       {review.expanded
                         ? review.content
                         : truncateText(review.content, 200)}
                     </p>
-                    {review.content.length > 200 && (
+
+                    {review.content.length > 40 && (
                       <button
                         className="review-toggle"
                         onClick={() => toggleReview(review.id)}
@@ -165,9 +214,32 @@ export default function MovieDetailModal({ movie, onClose, onMovieClick }) {
                 ))}
               </div>
             )}
+
+            {/* ⭐ 리뷰 페이지네이션 */}
+            {totalReviewPages > 1 && (
+              <div className="review-pagination">
+                <button
+                  disabled={reviewPage === 1}
+                  onClick={() => setReviewPage((p) => p - 1)}
+                >
+                  이전
+                </button>
+
+                <span>
+                  {reviewPage} / {totalReviewPages}
+                </span>
+
+                <button
+                  disabled={reviewPage === totalReviewPages}
+                  onClick={() => setReviewPage((p) => p + 1)}
+                >
+                  다음
+                </button>
+              </div>
+            )}
           </div>
 
-          {/* 추천 영화 */}
+          {/* ---------------- 추천 영화 ---------------- */}
           <div className="modal-section">
             <h3>추천 영화</h3>
             {recommendations.length === 0 ? (
@@ -193,7 +265,7 @@ export default function MovieDetailModal({ movie, onClose, onMovieClick }) {
         </div>
       </div>
 
-      {/* 트레일러 */}
+      {/* ---------------- 트레일러 ---------------- */}
       {showTrailer && (
         <div className="trailer-overlay" onClick={() => setShowTrailer(false)}>
           <div className="trailer-wrapper" onClick={(e) => e.stopPropagation()}>
